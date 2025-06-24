@@ -193,8 +193,8 @@ Para candidatos que queiram se destacar, especialmente em vagas de senioridade m
 
 ### Opções recomendadas:
 - **Hugging Face** - Possui diversos modelos gratuitos para chat
-  - Documentação: https://huggingface.co/docs/api-inference/quicktour
-  - Modelos gratuitos: https://huggingface.co/models?pipeline_tag=conversational
+  - Documentação: https://huggingface.co/docs/inference-providers/index
+  - Modelos: https://huggingface.co/models
 - **Ollama** - Para rodar modelos localmente
 - **OpenAI API** - Tem tier gratuito limitado
 
