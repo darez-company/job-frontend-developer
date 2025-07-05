@@ -12,7 +12,7 @@ export const ChatInput = () => {
                     focus:outline-none focus-visible:ring-0 focus-visible:outline-none 
                     shadow-none bg-transparent text-white
                    placeholder:text-zinc-400 text-sm placeholder:text-sm placeholder:font-medium
-                   selection:bg-blue-600 selection:text-white"
+                   selection:bg-blue-600 selection:text-white custom-scrollbar"
                 placeholder="Digite sua mensagem..."
             />
 
