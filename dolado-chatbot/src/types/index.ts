@@ -1,7 +1,10 @@
+export type ChatStep = 'welcome' | 'qualification' | 'marketplace' | 'products' | 'diagnosis' | 'result';
+
 export interface Message {
     id: string;
     text: string;
     sender: 'user' | 'bot';
+    options?: string[];
 }
 
 interface FollowUp {
@@ -9,11 +12,9 @@ interface FollowUp {
     options: string[];
 }
 
-type ConversationType = 'welcome' | 'qualification' | 'marketplace' | 'products' | 'diagnosis' | 'result';
-
 export interface ConversationStep {
     message: string;
-    type: ConversationType;
+    type: ChatStep;
     options?: string[];
     followUp?: FollowUp;
 }
