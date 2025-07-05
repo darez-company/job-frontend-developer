@@ -26,7 +26,7 @@ export const ChatOption = ({ text, handleChatOption }: ChatOptionProps) => {
             onClick={handleClick}
             variant="outline"
             size="sm"
-            className='flex-1 min-w-[200px] p-6 break-words whitespace-normal border-zinc-700
+            className='flex-1 min-w-[200px] p-6 sm:p-8 break-words whitespace-normal border-zinc-700
                 transition-all duration-200 ease-in-out bg-transparent text-white hover:bg-zinc-800
                 hover:border-primary hover:text-primary-foreground cursor-pointer
             '
