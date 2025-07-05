@@ -45,13 +45,50 @@ export const useChatStore = create<ChatStore>((set, get) => ({
         set({ isBotTyping: true });
 
         setTimeout(() => {
-            const { currentStepIndex, messages } = get();
+            const { currentStepIndex, messages, isInFollowUp } = get();
 
             const currentStep = conversationSteps[currentStepIndex];
 
             if (!currentStep) return;
 
-            set({ 
+            if (isInFollowUp && currentStep?.followUp) {
+                set({
+                    isInFollowUp: false,
+                    messages: [
+                        ...messages,
+                        {
+                            id: uuidv4(),
+                            text: currentStep.followUp.message,
+                            sender: 'bot',
+                            options: currentStep.followUp.options || [],
+                        }
+                    ],
+                    currentStepIndex: currentStepIndex + 1,
+                    isBotTyping: false,
+                });
+
+                return;
+            }
+
+            if (!isInFollowUp && currentStep?.followUp) {
+                set({
+                    isInFollowUp: true,
+                    messages: [
+                        ...messages,
+                        {
+                            id: uuidv4(),
+                            text: currentStep.message,
+                            sender: 'bot',
+                            options: currentStep.options || [],
+                        }
+                    ],
+                    isBotTyping: false,
+                });
+
+                return;
+            }
+
+            set({
                 messages: [
                     ...messages,
                     {
