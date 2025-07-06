@@ -1,18 +1,25 @@
 import { Textarea } from "@/components/ui/textarea"
 import { useChatStore } from "@/store/chat-store";
 import { SendHorizontal } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid"
 
 export const ChatInput = () => {
     const [value, setValue] = useState("");
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const messages = useChatStore((state) => state.messages);
     const setMessages = useChatStore((state) => state.setMessages);
     const botReply = useChatStore((state) => state.botReply);
     const hideOptionsFor = useChatStore((state) => state.hideOptionsFor);
     const setChatMode = useChatStore((state) => state.setChatMode);
+
+    useEffect(() => {
+        if (!useChatStore.getState().isBotTyping) {
+            textareaRef.current?.focus();
+        }
+    }, [messages.length]);
 
     function sendMessage() {
         const textareaIsEmpty = value.trim() === "";
@@ -58,6 +65,7 @@ export const ChatInput = () => {
             bg-zinc-900 focus-within:bg-zinc-800 transition-colors"
         >
             <Textarea
+                ref={textareaRef}
                 value={value}
                 onChange={(e) => {
                     setValue(e.target.value);
