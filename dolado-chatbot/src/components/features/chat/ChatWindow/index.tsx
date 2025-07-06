@@ -7,6 +7,7 @@ import { useChatStore } from "@/store/chat-store"
 import { TypingIndicator } from "@/components/ui/typing-indicator";
 import { Fragment, useEffect, useRef } from "react";
 import { ChatOptionsWrapper } from "../ChatOptionsWrapper";
+import { playBotSound } from "@/lib/utils";
 
 export const ChatWindow = () => {
     const messages = useChatStore((state => state.messages));
@@ -19,9 +20,19 @@ export const ChatWindow = () => {
     }, []);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
     }, [messages, isBotTyping]);
+
+    useEffect(() => {
+        const lastMessage = messages[messages.length - 1];
+
+        if (lastMessage?.sender === 'bot') {
+            playBotSound();
+        }
+    }, [messages])
 
     return (
         <div className="flex flex-col bg-zinc-900 h-full w-full rounded-none sm:h-[800px] sm:w-[650px] sm:rounded-2xl">
