@@ -14,19 +14,24 @@ export interface ChatStore {
     setChatMode: (value: 'SCRIPTED' | 'AI') => void;
     hideOptionsFor: (id: string) => void;
     startConversation: () => void;
+    resetConversation: () => void;
     botReply: () => void;
 }
 
-export const useChatStore = create<ChatStore>((set, get) => ({
+const initialState = {
     messages: [],
-    setMessages: (message: Message) => set((state) => ({
-        messages: [...state.messages, message]
-    })),
     currentStepIndex: 0,
     isInFollowUp: false,
     isBotTyping: false,
     visibleOptions: {},
-    chatMode: 'SCRIPTED',
+    chatMode: 'SCRIPTED' as 'SCRIPTED' | 'AI',
+}
+
+export const useChatStore = create<ChatStore>((set, get) => ({
+    ...initialState,
+    setMessages: (message: Message) => set((state) => ({
+        messages: [...state.messages, message]
+    })),
     setChatMode: (value: 'SCRIPTED' | 'AI') => set({ chatMode: value }),
     hideOptionsFor: (id: string) =>
     set((state) => ({
@@ -51,6 +56,11 @@ export const useChatStore = create<ChatStore>((set, get) => ({
                 currentStepIndex: 1,
             });
         }, 2000);
+    },
+    resetConversation: () => {
+        set(initialState);
+
+        get().startConversation();
     },
     botReply: async () => {
         const { currentStepIndex, messages, isInFollowUp, chatMode } = get();
