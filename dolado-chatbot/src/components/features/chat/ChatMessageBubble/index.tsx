@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Message } from "@/types";
 import { motion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
 
 interface ChatMessageBubbleProps {
   message: Message;
@@ -28,7 +29,13 @@ export const ChatMessageBubble = ({ message }: ChatMessageBubbleProps) => {
                     }
                 )}
             >
-                <p className="break-words">{message.text}</p>
+                <ReactMarkdown
+                    components={{
+                        p: ({ children }) => <p className="break-words whitespace-pre-wrap">{children}</p>,
+                    }}
+                >
+                    {message.text}
+                </ReactMarkdown>
             </motion.div>
         </div>
     );
