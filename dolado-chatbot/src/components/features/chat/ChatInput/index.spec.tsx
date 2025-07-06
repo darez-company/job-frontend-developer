@@ -19,6 +19,7 @@ vi.mock('@/store/chat-store');
 const mockSetMessages = vi.fn();
 const mockBotReply = vi.fn();
 const mockHideOptionsFor = vi.fn();
+const mockSetChatMode = vi.fn();
 
 function createChatStoreMock(partial?: Partial<ChatStore>): ChatStore {
   return {
@@ -28,6 +29,8 @@ function createChatStoreMock(partial?: Partial<ChatStore>): ChatStore {
     isInFollowUp: false,
     isBotTyping: false,
     visibleOptions: {},
+    chatMode: 'SCRIPTED',
+    setChatMode: vi.fn(),
     hideOptionsFor: vi.fn(),
     botReply: vi.fn(),
     startConversation: vi.fn(),
@@ -45,6 +48,7 @@ describe('ChatInput', () => {
         setMessages: mockSetMessages,
         botReply: mockBotReply,
         hideOptionsFor: mockHideOptionsFor,
+        setChatMode: mockSetChatMode,
         isBotTyping: false,
       };
 
@@ -177,6 +181,7 @@ describe('ChatInput', () => {
         setMessages: mockSetMessages,
         botReply: mockBotReply,
         hideOptionsFor: mockHideOptionsFor,
+        setChatMode: mockSetChatMode,
         isBotTyping: false,
       };
 
