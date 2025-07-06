@@ -62,7 +62,7 @@ export const ChatInput = () => {
                 }}
                 disabled={useChatStore.getState().isBotTyping}
                 onKeyDown={handleKeyDown}
-                className="w-full pr-10 p-4 resize-none min-h-[40px] max-h-[120px] overflow-auto 
+                className="w-full p-4 pr-10 resize-none min-h-[40px] max-h-[120px] overflow-auto 
                     border-none outline-none ring-0 focus:ring-0
                     focus:outline-none focus-visible:ring-0 focus-visible:outline-none 
                     shadow-none bg-transparent text-white

@@ -28,7 +28,7 @@ export const ChatMessageBubble = ({ message }: ChatMessageBubbleProps) => {
                     }
                 )}
             >
-                <p>{message.text}</p>
+                <p className="break-words">{message.text}</p>
             </motion.div>
         </div>
     );
