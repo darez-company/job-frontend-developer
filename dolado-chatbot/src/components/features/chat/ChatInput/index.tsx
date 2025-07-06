@@ -12,6 +12,7 @@ export const ChatInput = () => {
     const setMessages = useChatStore((state) => state.setMessages);
     const botReply = useChatStore((state) => state.botReply);
     const hideOptionsFor = useChatStore((state) => state.hideOptionsFor);
+    const setChatMode = useChatStore((state) => state.setChatMode);
 
     function sendMessage() {
         const textareaIsEmpty = value.trim() === "";
@@ -28,6 +29,7 @@ export const ChatInput = () => {
             hideOptionsFor(lastMessage.id);
         }
 
+        setChatMode('AI');
         setMessages({
             id: uuidv4(),
             text: value,
