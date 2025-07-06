@@ -12,6 +12,7 @@ export const ChatWindow = () => {
     const messages = useChatStore((state => state.messages));
     const isBotTyping = useChatStore((state => state.isBotTyping));
     const startConversation = useChatStore((state => state.startConversation));
+    const visibleOptions = useChatStore((state => state.visibleOptions));
 
     useEffect(() => {
         startConversation();
@@ -31,7 +32,7 @@ export const ChatWindow = () => {
                         <ChatMessageBubble
                             message={message}
                         />
-                        {message?.options && message.options.length > 0 && (
+                        {message?.options && message.options.length > 0 && visibleOptions[message.id] !== false && (
                             <ChatOptionsWrapper options={message.options} />
                         )}
                     </Fragment>

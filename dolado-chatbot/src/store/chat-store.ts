@@ -9,6 +9,8 @@ interface ChatStore {
     currentStepIndex: number;
     isInFollowUp: boolean;
     isBotTyping: boolean;
+    visibleOptions: Record<string, boolean>;
+    hideOptionsFor: (id: string) => void;
     startConversation: () => void;
     botReply: () => void;
 }
@@ -21,6 +23,11 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     currentStepIndex: 0,
     isInFollowUp: false,
     isBotTyping: false,
+    visibleOptions: {},
+    hideOptionsFor: (id: string) =>
+    set((state) => ({
+      visibleOptions: { ...state.visibleOptions, [id]: false },
+    })),
     startConversation: () => {
         set({ isBotTyping: true });
 
