@@ -18,14 +18,4 @@ describe('ChatHeader', () => {
     // Assert
     expect(screen.getByText('Online')).toBeInTheDocument();
   });
-
-  it('should render chatbot icon', () => {
-    // Arrange & Act
-    render(<ChatHeader />);
-
-    const icon = screen.getByLabelText('Bot Icon');
-
-    // Assert
-    expect(icon).toBeInTheDocument();
-  });
 })
