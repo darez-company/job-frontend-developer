@@ -3,7 +3,7 @@ import { useChatStore } from "@/store/chat-store";
 import { motion } from "framer-motion";
 import { v4 as uuidv4 } from "uuid";
 
-interface ChatOptionProps {
+export interface ChatOptionProps {
     text: string;
     handleChatOption: (show: boolean) => void;
 }
