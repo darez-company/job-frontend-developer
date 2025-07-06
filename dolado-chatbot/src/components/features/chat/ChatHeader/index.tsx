@@ -4,7 +4,7 @@ export const ChatHeader = () => {
     return (
         <header className="flex flex-col p-3 sm:p-4 rounded-tl-2xl rounded-tr-2xl border-b-2 border-zinc-800">
             <div className="flex items-center gap-1.5">
-                <Bot size={30} />
+                <Bot size={30} aria-label="Bot Icon" />
                 <h1 className="text-[1.2rem] sm:text-xl font-semibold">Sofia</h1>
             </div>
             <div className="flex items-center gap-1 mt-1">
