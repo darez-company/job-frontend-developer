@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { v4 as uuidv4 } from "uuid";
 import { conversationSteps } from "@/data/conversation-steps";
 
-interface ChatStore {
+export interface ChatStore {
     messages: Message[];
     setMessages: (message: Message) => void;
     currentStepIndex: number;

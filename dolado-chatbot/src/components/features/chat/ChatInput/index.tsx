@@ -71,7 +71,8 @@ export const ChatInput = () => {
                 placeholder="Digite sua mensagem..."
             />
 
-            <SendHorizontal 
+            <SendHorizontal
+                data-testid="send-button"
                 onClick={handleClick}
                 className={`absolute bottom-4 right-4 transition-colors
                 ${value.trim() 
