@@ -10,6 +10,8 @@ export interface ChatStore {
     isInFollowUp: boolean;
     isBotTyping: boolean;
     visibleOptions: Record<string, boolean>;
+    chatMode: 'SCRIPTED' | 'AI';
+    setChatMode: (value: 'SCRIPTED' | 'AI') => void;
     hideOptionsFor: (id: string) => void;
     startConversation: () => void;
     botReply: () => void;
@@ -24,6 +26,8 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     isInFollowUp: false,
     isBotTyping: false,
     visibleOptions: {},
+    chatMode: 'SCRIPTED',
+    setChatMode: (value: 'SCRIPTED' | 'AI') => set({ chatMode: value }),
     hideOptionsFor: (id: string) =>
     set((state) => ({
       visibleOptions: { ...state.visibleOptions, [id]: false },
@@ -48,12 +52,34 @@ export const useChatStore = create<ChatStore>((set, get) => ({
             });
         }, 2000);
     },
-    botReply: () => {
+    botReply: async () => {
+        const { currentStepIndex, messages, isInFollowUp, chatMode } = get();
+
         set({ isBotTyping: true });
 
-        setTimeout(() => {
-            const { currentStepIndex, messages, isInFollowUp } = get();
+        if (chatMode === 'AI') {
+            const apiMessages = messages.map(message => ({
+                role: message.sender === 'bot' ? 'assistant' : 'user',
+                content: message.text,
+            }));
 
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: apiMessages }),
+            });
+
+            const data = await response.json();
+
+            set(state => ({
+                messages: [...state.messages, { id: uuidv4(), sender: 'bot', text: data.reply }],
+                isBotTyping: false,
+            }));
+
+            return;
+        }
+
+        setTimeout(() => {
             const currentStep = conversationSteps[currentStepIndex];
 
             if (!currentStep) return;
