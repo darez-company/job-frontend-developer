@@ -2,6 +2,7 @@ import { Message } from "@/types";
 import { create } from "zustand";
 import { v4 as uuidv4 } from "uuid";
 import { conversationSteps } from "@/data/conversation-steps";
+import { persist } from "zustand/middleware";
 
 export interface ChatStore {
     messages: Message[];
@@ -27,7 +28,9 @@ const initialState = {
     chatMode: 'SCRIPTED' as 'SCRIPTED' | 'AI',
 }
 
-export const useChatStore = create<ChatStore>((set, get) => ({
+export const useChatStore = create(
+    persist<ChatStore>(
+        (set, get) => ({
     ...initialState,
     setMessages: (message: Message) => set((state) => ({
         messages: [...state.messages, message]
@@ -154,5 +157,8 @@ export const useChatStore = create<ChatStore>((set, get) => ({
                 currentStepIndex: currentStepIndex + 1,
             });
         }, 1500);
-    }
-}));
+    }}),
+    {
+        name: 'chat-storage'
+    })
+);
