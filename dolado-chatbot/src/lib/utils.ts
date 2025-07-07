@@ -8,5 +8,5 @@ export function cn(...inputs: ClassValue[]) {
 export function playBotSound() {
   const audio = new Audio('/sounds/bot-message.mp3');
 
-  audio.play();
+  audio.play().catch(error => console.warn(error));
 }
