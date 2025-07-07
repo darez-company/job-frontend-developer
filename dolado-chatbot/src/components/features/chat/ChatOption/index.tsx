@@ -9,11 +9,20 @@ export interface ChatOptionProps {
 }
 
 export const ChatOption = ({ text, handleChatOption }: ChatOptionProps) => {
+    const messages = useChatStore((state) => state.messages);
     const setMessages = useChatStore((state) => state.setMessages);
+    const hideOptionsFor = useChatStore((state) => state.hideOptionsFor);
     const botReply = useChatStore((state) => state.botReply);
 
     function handleClick() {
         handleChatOption(false);
+
+        const lastMessage = messages?.[messages.length - 1];
+
+        if (lastMessage?.options) {
+            hideOptionsFor(lastMessage.id);
+        }
+
         setMessages({
             id: uuidv4(),
             text,

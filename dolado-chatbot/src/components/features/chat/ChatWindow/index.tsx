@@ -16,7 +16,12 @@ export const ChatWindow = () => {
     const visibleOptions = useChatStore((state => state.visibleOptions));
 
     useEffect(() => {
-        startConversation();
+        const isConversationInProgressLocalStorage = localStorage.getItem('chat-storage');
+
+        if (!isConversationInProgressLocalStorage) {
+            startConversation();
+        }
+
     }, []);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
