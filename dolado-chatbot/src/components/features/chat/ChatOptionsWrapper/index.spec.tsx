@@ -52,7 +52,7 @@ describe('ChatOptionsWrapper', () => {
 
   it('should render nothing if the options prop is not provided (undefined)', () => {
     // Arrange
-    // @ts-expect-error - Testando o caso de prop opcional ou nula
+    // @ts-expect-error handle optional or null prop cases
     render(<ChatOptionsWrapper options={undefined} />);
 
     // Act & Assert
