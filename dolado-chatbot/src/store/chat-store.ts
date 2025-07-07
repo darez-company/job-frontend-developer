@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { v4 as uuidv4 } from "uuid";
 import { conversationSteps } from "@/data/conversation-steps";
 import { persist } from "zustand/middleware";
+import axios from 'axios'
 
 export interface ChatStore {
     messages: Message[];
@@ -77,13 +78,9 @@ export const useChatStore = create(
             }));
 
             try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ messages: apiMessages }),
+                const { data } = await axios.post('/api/chat', {
+                    messages: apiMessages,
                 });
-
-                const data = await response.json();
 
                 set(state => ({
                     messages: [...state.messages, { id: uuidv4(), sender: 'bot', text: data.reply }],
