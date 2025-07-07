@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={inter.variable}>
-      <body className={`bg-zinc-950 text-white ${inter.className}`}>
+      <body className={`bg-zinc-950 text-white ${inter.className}`} suppressHydrationWarning={true}>
         {children}
         <Toaster />
       </body>
