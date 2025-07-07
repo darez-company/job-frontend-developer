@@ -73,18 +73,27 @@ export const useChatStore = create<ChatStore>((set, get) => ({
                 content: message.text,
             }));
 
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ messages: apiMessages }),
-            });
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: apiMessages }),
+                });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            set(state => ({
-                messages: [...state.messages, { id: uuidv4(), sender: 'bot', text: data.reply }],
-                isBotTyping: false,
-            }));
+                set(state => ({
+                    messages: [...state.messages, { id: uuidv4(), sender: 'bot', text: data.reply }],
+                    isBotTyping: false,
+                }));
+            } catch (error) {
+                console.error(error);
+
+                set(state => ({
+                    messages: [...state.messages, { id: uuidv4(), sender: 'bot', text: 'Ocorreu um erro. Tente novamente!' }],
+                    isBotTyping: false,
+                }));
+            }
 
             return;
         }
