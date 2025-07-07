@@ -43,7 +43,7 @@ export const ChatWindow = () => {
     }, [messages])
 
     return (
-        <div className="flex flex-col bg-zinc-900 h-full w-full rounded-none sm:h-[800px] sm:w-[650px] sm:rounded-2xl">
+        <div className="flex flex-col bg-zinc-900 h-full w-full rounded-none sm:max-h-[90vh] sm:w-[650px] sm:rounded-2xl">
             <ChatHeader />
             <section className="flex flex-1 flex-col gap-4 p-3 sm:p-4 overflow-y-auto custom-scrollbar">
                 {messages.map((message) => (
