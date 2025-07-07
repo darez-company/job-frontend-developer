@@ -16,12 +16,15 @@ export const ChatWindow = () => {
     const visibleOptions = useChatStore((state => state.visibleOptions));
 
     useEffect(() => {
-        const isConversationInProgressLocalStorage = localStorage.getItem('chat-storage');
+        const chatStorage = localStorage.getItem('chat-storage');
+        const chatStorageJson = chatStorage ? JSON.parse(chatStorage) : null;
 
-        if (!isConversationInProgressLocalStorage) {
+        const isConversationInProgress = chatStorageJson?.state?.messages?.length > 0;
+
+        if (!isConversationInProgress) {
             startConversation();
         }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
