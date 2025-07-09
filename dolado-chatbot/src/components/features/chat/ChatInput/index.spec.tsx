@@ -25,6 +25,7 @@ function createChatStoreMock(partial?: Partial<ChatStore>): ChatStore {
   return {
     messages: [],
     setMessages: vi.fn(),
+    resetConversation: vi.fn(),
     currentStepIndex: 0,
     isInFollowUp: false,
     isBotTyping: false,
