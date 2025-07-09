@@ -1,10 +1,15 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach, Mocked } from 'vitest';
 import { useChatStore } from './chat-store';
 import { conversationSteps } from '@/data/conversation-steps';
+import axios from 'axios';
 
 vi.mock('uuid', () => ({
   v4: () => 'uuid-mock',
 }));
+
+vi.mock('axios');
+
+const axiosMock = axios as Mocked<typeof axios>;
 
 const initialState = useChatStore.getState();
 
@@ -78,10 +83,9 @@ describe('ChatStore', () => {
             messages: [{id: '1', text: 'Testing Answer', sender: 'user'}] 
         });
         
-        global.fetch = vi.fn(() => Promise.resolve({
-            ok: true,
-            json: () => Promise.resolve({ reply: 'Testing Reply' }),
-        }) as Promise<Response>);
+        axiosMock.post.mockResolvedValue({
+          data: { reply: 'Testing Reply' }
+        });
 
         // Act
         await useChatStore.getState().botReply();
@@ -89,7 +93,7 @@ describe('ChatStore', () => {
         // Assert
         const state = useChatStore.getState();
 
-        expect(fetch).toHaveBeenCalledWith('/api/chat', expect.any(Object));
+        expect(axiosMock.post).toHaveBeenCalledWith('/api/chat', expect.any(Object));
         expect(state.isBotTyping).toBe(false);
         expect(state.messages).toHaveLength(2);
         expect(state.messages[1].text).toContain('Testing Reply');
@@ -98,8 +102,8 @@ describe('ChatStore', () => {
     it('should handle AI mode reply on failure', async () => {
       // Arrange
       useChatStore.setState({ chatMode: 'AI' });
-      
-      global.fetch = vi.fn(() => Promise.reject('API is down'));
+
+      axiosMock.post.mockRejectedValue(new Error('API is down'));
 
       // Act
       await useChatStore.getState().botReply();
