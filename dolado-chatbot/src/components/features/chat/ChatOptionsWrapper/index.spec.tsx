@@ -3,8 +3,17 @@ import { describe, it, expect, vi } from 'vitest';
 import { ChatOptionsWrapper } from '.';
 
 vi.mock('../ChatOption', () => ({
-  ChatOption: ({ text, handleChatOption }: { text: string; handleChatOption: (value: boolean) => void; }) => (
-    <button data-testid="chat-option-mock" onClick={() => handleChatOption(false)}>
+  ChatOption: ({
+    text,
+    handleChatOption,
+  }: {
+    text: string;
+    handleChatOption: (value: boolean) => void;
+  }) => (
+    <button
+      data-testid="chat-option-mock"
+      onClick={() => handleChatOption(false)}
+    >
       {text}
     </button>
   ),

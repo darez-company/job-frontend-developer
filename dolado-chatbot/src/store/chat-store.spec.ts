@@ -1,4 +1,12 @@
-import { describe, it, expect, vi, beforeEach, afterEach, Mocked } from 'vitest';
+import {
+  describe,
+  it,
+  expect,
+  vi,
+  beforeEach,
+  afterEach,
+  Mocked,
+} from 'vitest';
 import { useChatStore } from './chat-store';
 import { conversationSteps } from '@/data/conversation-steps';
 import axios from 'axios';
@@ -18,7 +26,7 @@ describe('ChatStore', () => {
     useChatStore.setState(initialState, true);
     vi.useFakeTimers();
   });
-  
+
   afterEach(() => {
     vi.useRealTimers();
     vi.clearAllMocks();
@@ -26,7 +34,11 @@ describe('ChatStore', () => {
 
   it('should set a new message correctly', () => {
     // Arrange
-    const message = { id: '1', text: 'Testing Message', sender: 'user' as const };
+    const message = {
+      id: '1',
+      text: 'Testing Message',
+      sender: 'user' as const,
+    };
 
     // Act
     useChatStore.getState().setMessages(message);
@@ -44,7 +56,7 @@ describe('ChatStore', () => {
 
     // Act
     useChatStore.getState().startConversation();
-    
+
     expect(useChatStore.getState().isBotTyping).toBe(true);
 
     vi.runAllTimers();
@@ -70,33 +82,36 @@ describe('ChatStore', () => {
       // Assert
       const state = useChatStore.getState();
 
-      console.log(state.chatMode)
+      console.log(state.chatMode);
       expect(state.messages).toHaveLength(1);
       expect(state.messages[0].text).toBe(conversationSteps[0].message);
       expect(state.currentStepIndex).toBe(1);
     });
 
     it('should handle AI mode reply on success', async () => {
-        // Arrange
-        useChatStore.setState({ 
-            chatMode: 'AI', 
-            messages: [{id: '1', text: 'Testing Answer', sender: 'user'}] 
-        });
-        
-        axiosMock.post.mockResolvedValue({
-          data: { reply: 'Testing Reply' }
-        });
+      // Arrange
+      useChatStore.setState({
+        chatMode: 'AI',
+        messages: [{ id: '1', text: 'Testing Answer', sender: 'user' }],
+      });
 
-        // Act
-        await useChatStore.getState().botReply();
+      axiosMock.post.mockResolvedValue({
+        data: { reply: 'Testing Reply' },
+      });
 
-        // Assert
-        const state = useChatStore.getState();
+      // Act
+      await useChatStore.getState().botReply();
 
-        expect(axiosMock.post).toHaveBeenCalledWith('/api/chat', expect.any(Object));
-        expect(state.isBotTyping).toBe(false);
-        expect(state.messages).toHaveLength(2);
-        expect(state.messages[1].text).toContain('Testing Reply');
+      // Assert
+      const state = useChatStore.getState();
+
+      expect(axiosMock.post).toHaveBeenCalledWith(
+        '/api/chat',
+        expect.any(Object),
+      );
+      expect(state.isBotTyping).toBe(false);
+      expect(state.messages).toHaveLength(2);
+      expect(state.messages[1].text).toContain('Testing Reply');
     });
 
     it('should handle AI mode reply on failure', async () => {
@@ -107,7 +122,7 @@ describe('ChatStore', () => {
 
       // Act
       await useChatStore.getState().botReply();
-      
+
       // Assert
       const state = useChatStore.getState();
 

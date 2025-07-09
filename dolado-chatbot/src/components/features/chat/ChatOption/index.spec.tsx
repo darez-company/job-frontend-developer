@@ -1,4 +1,3 @@
-
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ChatOption, ChatOptionProps } from '.';
@@ -46,7 +45,9 @@ describe('ChatOption', () => {
     render(<ChatOption {...defaultProps} />);
 
     // Act
-    const buttonElement = screen.getByRole('button', { name: defaultProps.text });
+    const buttonElement = screen.getByRole('button', {
+      name: defaultProps.text,
+    });
 
     // Assert
     expect(buttonElement).toBeInTheDocument();
@@ -56,7 +57,9 @@ describe('ChatOption', () => {
     // Arrange
     render(<ChatOption {...defaultProps} />);
 
-    const buttonElement = screen.getByRole('button', { name: defaultProps.text });
+    const buttonElement = screen.getByRole('button', {
+      name: defaultProps.text,
+    });
 
     // Act
     fireEvent.click(buttonElement);

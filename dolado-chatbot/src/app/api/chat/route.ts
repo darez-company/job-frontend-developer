@@ -8,7 +8,10 @@ export async function POST(request: Request) {
     const { messages } = await request.json();
 
     if (!messages) {
-      return NextResponse.json({ error: 'Messages are required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Messages are required' },
+        { status: 400 },
+      );
     }
 
     const promptMessage = {
@@ -20,22 +23,24 @@ export async function POST(request: Request) {
         NUNCA diga que você é um modelo de linguagem ou uma IA. Você é Sofia.
         Sempre se apresente como Sofia, da Dolado, na primeira interação.
       `,
-    }
+    };
 
     const chatCompletion = await client.chatCompletion({
-      model: "meta-llama/Meta-Llama-3-8B-Instruct",
-      messages: [
-        promptMessage,
-        ...messages
-      ],
+      model: 'meta-llama/Meta-Llama-3-8B-Instruct',
+      messages: [promptMessage, ...messages],
     });
 
-    const botReply = chatCompletion.choices[0].message?.content || "Ocorreu um erro. Por favor, tente novamente.";
+    const botReply =
+      chatCompletion.choices[0].message?.content ||
+      'Ocorreu um erro. Por favor, tente novamente.';
 
     return NextResponse.json({ reply: botReply });
   } catch (error) {
-    console.error("Error in Hugging Face API route:", error);
-  
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error('Error in Hugging Face API route:', error);
+
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 },
+    );
   }
 }

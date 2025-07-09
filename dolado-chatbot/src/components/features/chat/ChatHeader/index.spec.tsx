@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import { ChatHeader } from '.'
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import { ChatHeader } from '.';
 
 describe('ChatHeader', () => {
   it('should render chatbot name (Sofia)', () => {
@@ -18,4 +18,4 @@ describe('ChatHeader', () => {
     // Assert
     expect(screen.getByText('Online')).toBeInTheDocument();
   });
-})
+});

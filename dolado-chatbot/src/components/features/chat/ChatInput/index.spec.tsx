@@ -62,11 +62,13 @@ describe('ChatInput', () => {
   it('should render the textarea and send button', () => {
     // Arrange & Act
     render(<ChatInput />);
-    
+
     const sendButton = screen.getByTestId('send-button');
 
     // Assert
-    expect(screen.getByPlaceholderText('Digite sua mensagem...')).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('Digite sua mensagem...'),
+    ).toBeInTheDocument();
     expect(sendButton).toBeInTheDocument();
   });
 
@@ -74,7 +76,9 @@ describe('ChatInput', () => {
     // Arrange
     render(<ChatInput />);
 
-    const textarea = screen.getByPlaceholderText<HTMLTextAreaElement>('Digite sua mensagem...');
+    const textarea = screen.getByPlaceholderText<HTMLTextAreaElement>(
+      'Digite sua mensagem...',
+    );
 
     // Act
     fireEvent.change(textarea, { target: { value: 'Testing Message' } });
@@ -108,7 +112,9 @@ describe('ChatInput', () => {
     fireEvent.click(sendIcon!);
 
     // Assert
-    expect(toast.error).toHaveBeenCalledWith('Digite uma mensagem antes de enviar.');
+    expect(toast.error).toHaveBeenCalledWith(
+      'Digite uma mensagem antes de enviar.',
+    );
     expect(mockSetMessages).not.toHaveBeenCalled();
     expect(mockBotReply).not.toHaveBeenCalled();
   });
@@ -117,7 +123,9 @@ describe('ChatInput', () => {
     // Arrange
     render(<ChatInput />);
 
-    const textarea = screen.getByPlaceholderText<HTMLTextAreaElement>('Digite sua mensagem...');
+    const textarea = screen.getByPlaceholderText<HTMLTextAreaElement>(
+      'Digite sua mensagem...',
+    );
     const sendIcon = document.querySelector('.lucide-send-horizontal');
     fireEvent.change(textarea, { target: { value: 'Testing Message' } });
 
@@ -139,7 +147,9 @@ describe('ChatInput', () => {
     // Arrange
     render(<ChatInput />);
 
-    const textarea = screen.getByPlaceholderText<HTMLTextAreaElement>('Digite sua mensagem...');
+    const textarea = screen.getByPlaceholderText<HTMLTextAreaElement>(
+      'Digite sua mensagem...',
+    );
 
     // Act
     fireEvent.change(textarea, { target: { value: 'Testing Message' } });
@@ -163,7 +173,11 @@ describe('ChatInput', () => {
 
     // Act
     fireEvent.change(textarea, { target: { value: 'Testing Message' } });
-    fireEvent.keyDown(textarea, { key: 'Enter', code: 'Enter', shiftKey: true });
+    fireEvent.keyDown(textarea, {
+      key: 'Enter',
+      code: 'Enter',
+      shiftKey: true,
+    });
 
     // Assert
     expect(mockSetMessages).not.toHaveBeenCalled();
@@ -172,7 +186,12 @@ describe('ChatInput', () => {
   it('should hide options from the last message when sending a new one', () => {
     // Arrange
     const messagesWithWithOptions = [
-      { id: 'message-id-1', text: 'Testing Message', sender: 'bot', options: ['Option 1', 'Option 2'] }
+      {
+        id: 'message-id-1',
+        text: 'Testing Message',
+        sender: 'bot',
+        options: ['Option 1', 'Option 2'],
+      },
     ];
 
     vi.mocked(useChatStore).mockImplementation((selector) => {
@@ -204,7 +223,9 @@ describe('ChatInput', () => {
 
   it('should be disabled when bot is typing', () => {
     // Arrange && Act
-    vi.mocked(useChatStore.getState).mockReturnValue(createChatStoreMock({ isBotTyping: true }));
+    vi.mocked(useChatStore.getState).mockReturnValue(
+      createChatStoreMock({ isBotTyping: true }),
+    );
 
     render(<ChatInput />);
 
