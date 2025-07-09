@@ -11,8 +11,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Onboarding Dolado',
+  title: 'Dolado Chatbot',
   description: 'Teste prático para Frontend',
+  icons: {
+    icon: '/dolado-favicon.ico',
+    shortcut: '/dolado-favicon.ico',
+    apple: '/dolado-favicon.png',
+  },
 };
 
 export default function RootLayout({
