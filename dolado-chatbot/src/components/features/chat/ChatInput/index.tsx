@@ -65,6 +65,7 @@ export const ChatInput = () => {
             bg-zinc-900 focus-within:bg-zinc-800 transition-colors"
         >
             <Textarea
+                data-testid="message-textarea"
                 ref={textareaRef}
                 value={value}
                 onChange={(e) => {

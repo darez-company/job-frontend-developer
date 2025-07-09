@@ -5,7 +5,7 @@ export const NewChat = () => {
     const resetConversation = useChatStore((state) => state.resetConversation);
 
     return (
-        <MenubarItem onClick={resetConversation} className="cursor-pointer">
+        <MenubarItem data-testid="new-chat" onClick={resetConversation} className="cursor-pointer">
             Nova conversa
         </MenubarItem>
     )

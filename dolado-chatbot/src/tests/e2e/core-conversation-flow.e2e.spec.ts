@@ -1,7 +1,7 @@
 import { conversationSteps } from '@/data/conversation-steps';
 import { test, expect } from '@playwright/test';
 
-test.describe('Chat with Scripted Options Flow', () => {
+test.describe('Core Conversation Flow', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/');
     });

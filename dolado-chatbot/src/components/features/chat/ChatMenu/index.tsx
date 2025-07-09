@@ -13,7 +13,7 @@ export const ChatMenu = () => {
         <Menubar className="bg-transparent border-none shadow-none">
         <MenubarMenu>
             <MenubarTrigger className="text-zinc-400 hover:text-white transition-colors p-2 cursor-pointer">
-                <Settings size={24} />
+                <Settings data-testid="settings-icon" size={24} />
             </MenubarTrigger>
             <MenubarContent className="bg-zinc-900 text-white border-zinc-700 w-56">
                 <NewChat />

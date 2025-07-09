@@ -32,7 +32,7 @@ export const ExportChat = () => {
     };
 
     return (
-        <MenubarItem onClick={handleExport} className="cursor-pointer">
+        <MenubarItem data-testid="export-chat" onClick={handleExport} className="cursor-pointer">
             Exportar conversa
         </MenubarItem>
     )
